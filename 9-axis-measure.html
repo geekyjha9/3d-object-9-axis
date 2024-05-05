@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>9-Axis Motion Measurement</title>
+  <style>
+    #dataContainer {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>9-Axis Motion Measurement</h1>
+  <div id="dataContainer">
+    <p>Alpha (Z-axis rotation): <span id="alphaValue"></span></p>
+    <p>Beta (X-axis rotation): <span id="betaValue"></span></p>
+    <p>Gamma (Y-axis rotation): <span id="gammaValue"></span></p>
+    <p>Acceleration (X): <span id="accelerationX"></span></p>
+    <p>Acceleration (Y): <span id="accelerationY"></span></p>
+    <p>Acceleration (Z): <span id="accelerationZ"></span></p>
+    <p>Rotation Rate (Alpha): <span id="rotationAlpha"></span></p>
+    <p>Rotation Rate (Beta): <span id="rotationBeta"></span></p>
+    <p>Rotation Rate (Gamma): <span id="rotationGamma"></span></p>
+  </div>
+
+  <script>
+    // Check if the required events are supported
+    if (window.DeviceOrientationEvent && window.DeviceMotionEvent) {
+      // Request permission to access the sensors
+      if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+        DeviceOrientationEvent.requestPermission()
+          .then(permissionState => {
+            if (permissionState === 'granted') {
+              // Add event listeners
+              window.addEventListener('deviceorientation', handleOrientation, true);
+              window.addEventListener('devicemotion', handleMotion, true);
+            } else {
+              console.error('Permission to access device orientation was not granted.');
+            }
+          })
+          .catch(error => {
+            console.error('Error requesting permission:', error);
+          });
+      } else {
+        // Add event listeners without permission request
+        window.addEventListener('deviceorientation', handleOrientation, true);
+        window.addEventListener('devicemotion', handleMotion, true);
+      }
+    } else {
+      console.error('Device orientation or motion not supported.');
+    }
+
+    function handleOrientation(event) {
+      document.getElementById('alphaValue').textContent = event.alpha?.toFixed(2) || 'N/A';
+      document.getElementById('betaValue').textContent = event.beta?.toFixed(2) || 'N/A';
+      document.getElementById('gammaValue').textContent = event.gamma?.toFixed(2) || 'N/A';
+    }
+
+    function handleMotion(event) {
+      document.getElementById('accelerationX').textContent = event.accelerationIncludingGravity?.x?.toFixed(2) || 'N/A';
+      document.getElementById('accelerationY').textContent = event.accelerationIncludingGravity?.y?.toFixed(2) || 'N/A';
+      document.getElementById('accelerationZ').textContent = event.accelerationIncludingGravity?.z?.toFixed(2) || 'N/A';
+      document.getElementById('rotationAlpha').textContent = (event.rotationRate?.alpha || 0).toFixed(2);
+      document.getElementById('rotationBeta').textContent = (event.rotationRate?.beta || 0).toFixed(2);
+      document.getElementById('rotationGamma').textContent = (event.rotationRate?.gamma || 0).toFixed(2);
+    }
+  </script>
+</body>
+</html>
