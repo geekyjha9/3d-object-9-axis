@@ -108,4 +108,4 @@ setInterval(function () {
         }
     };
     processSensorData(sensorData);
-}, 1); // Update every 1 second (adjust as needed)
+}, 3000); // Update every 1 second (adjust as needed)
