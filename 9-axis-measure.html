@@ -69,3 +69,66 @@
   </script>
 </body>
 </html>
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>9-Axis Motion Measurement</title>
+<script src="https://cdn.jsdelivr.net/npm/tracking/build/tracking.js"></script>
+<style>
+  #canvas {
+    width: 100%;
+    height: auto;
+  }
+</style>
+</head>
+<body>
+<video id="video" width="640" height="480" autoplay></video>
+<canvas id="canvas"></canvas>
+
+<script>
+// Wait for DOM to be loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Get video and canvas elements
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const context = canvas.getContext('2d');
+
+    // Set up video stream
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function(stream) {
+            video.srcObject = stream;
+        })
+        .catch(function(error) {
+            console.error('Error accessing camera:', error);
+        });
+
+    // Wait for video to be loaded
+    video.addEventListener('loadedmetadata', function() {
+        // Set canvas dimensions to match video
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+
+        // Start tracking motion
+        tracking.track('#video', new tracking.ObjectTracker(['face', 'eye']));
+        tracking.track('#video', new tracking.ColorTracker(['yellow']));
+
+        // Draw tracking rectangles
+        tracking.track('#video', new tracking.RectangleTracker());
+        tracking.track('#video', new tracking.PointTracker());
+        
+        tracking.track('#video', new tracking.LandmarksTracker());
+        tracking.track('#video', new tracking.SimpleTracker());
+        tracking.track('#video', new tracking.FingerTracker());
+    });
+
+    // Draw tracking rectangles on canvas
+    tracking.track('#video', new tracking.RectangleTracker());
+});
+</script>
+</body>
+</html> -->

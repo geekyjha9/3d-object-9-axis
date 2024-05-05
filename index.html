@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -18,5 +18,111 @@
     <canvas id="renderCanvas"></canvas>
     <button src="./9-axis-measure.html">go to move</button>
     <script src="app.js"></script>
+</body>
+</html> -->
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>9-Axis Sensor Check</title>
+<style>
+  #container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+  }
+</style>
+</head>
+<body>
+<div id="container">Checking sensors...</div>
+
+<script>
+  // Check if the browser supports DeviceMotionEvent and DeviceOrientationEvent
+  if (window.DeviceMotionEvent && window.DeviceOrientationEvent) {
+    // Sensors supported, display UI
+    document.getElementById('container').innerHTML = `
+      <div id="sensorData"></div>
+      <div id="sensorCheck">Sensors are available!</div>
+    `;
+    
+    // Add event listeners for motion and orientation
+    window.addEventListener('devicemotion', handleMotion, false);
+    window.addEventListener('deviceorientation', handleOrientation, false);
+  } else {
+    // Sensors not supported, display message
+    document.getElementById('container').innerHTML = "Sensors not available.";
+  }
+
+  function handleMotion(event) {
+    // Extract motion data from event
+    var acceleration = event.acceleration; // Acceleration along X, Y, Z axes
+    var accelerationIncludingGravity = event.accelerationIncludingGravity; // Acceleration including gravity
+    var rotationRate = event.rotationRate; // Rotation rate around X, Y, Z axes
+
+    // Display motion data
+    var sensorDataDiv = document.getElementById('sensorData');
+    sensorDataDiv.innerHTML = `
+      <h2>Motion Data</h2>
+      <p>Acceleration (m/s²):</p>
+      <ul>
+        <li>X: ${acceleration.x.toFixed(2)}</li>
+        <li>Y: ${acceleration.y.toFixed(2)}</li>
+        <li>Z: ${acceleration.z.toFixed(2)}</li>
+      </ul>
+      <p>Acceleration Including Gravity (m/s²):</p>
+      <ul>
+        <li>X: ${accelerationIncludingGravity.x.toFixed(2)}</li>
+        <li>Y: ${accelerationIncludingGravity.y.toFixed(2)}</li>
+        <li>Z: ${accelerationIncludingGravity.z.toFixed(2)}</li>
+      </ul>
+      <p>Rotation Rate (deg/s):</p>
+      <ul>
+        <li>Alpha: ${rotationRate.alpha.toFixed(2)}</li>
+        <li>Beta: ${rotationRate.beta.toFixed(2)}</li>
+        <li>Gamma: ${rotationRate.gamma.toFixed(2)}</li>
+      </ul>
+    `;
+
+    // Log motion data to console
+    console.log("Motion Data:", {
+      acceleration: acceleration,
+      accelerationIncludingGravity: accelerationIncludingGravity,
+      rotationRate: rotationRate
+    });
+  }
+
+  function handleOrientation(event) {
+    // Extract orientation data from event
+    var alpha = event.alpha; // Z-axis rotation (in degrees)
+    var beta = event.beta;   // X-axis rotation (in degrees)
+    var gamma = event.gamma; // Y-axis rotation (in degrees)
+
+    // Display orientation data
+    var sensorDataDiv = document.getElementById('sensorData');
+    sensorDataDiv.innerHTML += `
+      <h2>Orientation Data</h2>
+      <p>Alpha (Z-axis): ${alpha.toFixed(2)} degrees</p>
+      <p>Beta (X-axis): ${beta.toFixed(2)} degrees</p>
+      <p>Gamma (Y-axis): ${gamma.toFixed(2)} degrees</p>
+    `;
+
+    // Log orientation data to console
+    console.log("Orientation Data:", {
+      alpha: alpha,
+      beta: beta,
+      gamma: gamma
+    });
+  }
+</script>
 </body>
 </html>
