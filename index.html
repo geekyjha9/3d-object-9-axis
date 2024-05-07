@@ -12,10 +12,27 @@
             height: 100%;
             touch-action: none;
         }
+        #sensorData {
+            /* position: absolute; */
+            top: 20px;
+            left: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-family: monospace;
+        }
     </style>
 </head>
 <body>
+  <!-- <h1>Hello World....</h1> -->
     <canvas id="renderCanvas"></canvas>
+    <div id="sensorData">
+      <h3>Sensor Data</h3>
+      <p>Accelerometer: <span id="accelerometerData"></span></p>
+      <p>Gyroscope: <span id="gyroscopeData"></span></p>
+      <p>Magnetometer: <span id="magnetometerData"></span></p>
+  </div>
     <!-- <button src="./9-axis-measure.html">go to move</button> -->
     <script src="app.js"></script>
 </body>
